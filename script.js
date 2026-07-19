@@ -272,13 +272,48 @@ const favoriteGames = [
   },
   {
     title: 'NTE: Neverness to Everness',
-    note: 'Сюжетный хоррор с атмосферой и сообществом',
+    note: 'Амбициозный ролевой экшен с открытым миром, который сочетает в себе элементы сверхъестественного городского фэнтези, возможность управления автомобилем и глубокие механики исследования мегаполиса.',
     steamUrl: 'https://store.steampowered.com/app/4508340/NTE_Neverness_to_Everness/'
   },
   {
     title: 'Grand Theft Auto V Enhanced',
-    note: 'Открытый мир, сюжет и бесконечный экшен',
+    note: 'Культовый криминальный экшен в открытом мире, предлагающий масштабную историю о трёх разных преступниках в Лос-Сантосе, дополненную практически бесконечным онлайн-режимом.',
     steamUrl: 'https://store.steampowered.com/app/3240220/Grand_Theft_Auto_V_Enhanced/'
+  },
+  {
+    title: 'Atomic Heart',
+    note: 'Драйвовый шутер в сеттинге альтернативного СССР, предлагающий исследование захваченных роботами научных комплексов и динамичные сражения, которые дополняются четырьмя сюжетными дополнениями, расширяющими историю и мир игры.',
+    steamUrl: 'https://store.steampowered.com/app/668580?snr=5000_5100__'
+  },
+  {
+    title: 'PRAGMATA',
+    note: 'Загадочный научно-фантастический экшен от Capcom, действие которого разворачивается в антиутопическом будущем на футуристической Луне, где акцент сделан на атмосферном повествовании и уникальных механиках взаимодействия с миром.',
+    steamUrl: 'https://store.steampowered.com/app/3357650?snr=5000_5100__'
+  },
+  {
+    title: 'DOOM: The Dark Ages',
+    note: 'Брутальный приквел серии, возвращающий Палача Рока в средневековый сеттинг, где акцент сделан на ещё более тяжёлом, «тягучем» геймплее и новых инструментах истребления демонов, дополненный недавним сюжетным расширением.',
+    steamUrl: 'https://store.steampowered.com/app/3017860/DOOM_The_Dark_Ages/'
+  },
+  {
+    title: 'Resident Evil Village',
+    note: 'Атмосферный хоррор-экшен, в котором Итан Уинтерс оказывается в зловещей европейской деревне, пытаясь спасти свою дочь среди оборотней, вампиров и готических кошмаров.',
+    steamUrl: 'https://store.steampowered.com/app/1196590/Resident_Evil_Village/'
+  },
+  {
+    title: 'Resident Evil 4 (Remake)',
+    note: 'Современное переосмысление легендарной классики, сохранившее драйвовый экшен оригинала, но с обновлённой графикой, улучшенными механиками и более мрачной, детализированной подачей сюжета.',
+    steamUrl: 'https://store.steampowered.com/app/2050650/Resident_Evil_4/'
+  },
+  {
+    title: 'Resident Evil Requiem',
+    note: 'Девятая часть основной серии, предлагающая глубокий хоррор-опыт с переплетением историй Леона Кеннеди и Грейс Эшкрофт, возвращающая игроков к истокам серии через призму современных технологий.',
+    steamUrl: 'https://store.steampowered.com/app/3764200/Resident_Evil_Requiem/'
+  },
+  {
+    title: 'S.T.A.L.K.E.R. 2: Heart of Chornobyl',
+    note: 'Масштабное продолжение культовой серии, предлагающее погружение в опасную и непредсказуемую Зону отчуждения с её аномалиями, мутантами и атмосферой выживания в открытом мире.',
+    steamUrl: 'https://store.steampowered.com/app/1643320/STALKER_2_Heart_of_Chornobyl/'
   }
 ];
 
@@ -308,12 +343,26 @@ function renderFavorites() {
     ru: {
       'Zenless Zone Zero': translations.ru.gameZenlessNote,
       'NTE: Neverness to Everness': translations.ru.gameNTENote,
-      'Grand Theft Auto V Enhanced': translations.ru.gameGTANote
+      'Grand Theft Auto V Enhanced': translations.ru.gameGTANote,
+      'Atomic Heart': translations.ru.gameAtomicNote,
+      'PRAGMATA': translations.ru.gamePragmataNote,
+      'DOOM: The Dark Ages': translations.ru.gameDoomNote,
+      'Resident Evil Village': translations.ru.gameResidentVillageNote,
+      'Resident Evil 4 (Remake)': translations.ru.gameResident4Note,
+      'Resident Evil Requiem': translations.ru.gameResidentRequiemNote,
+      'S.T.A.L.K.E.R. 2: Heart of Chornobyl': translations.ru.gameStalker2Note
     },
     en: {
       'Zenless Zone Zero': translations.en.gameZenlessNote,
       'NTE: Neverness to Everness': translations.en.gameNTENote,
-      'Grand Theft Auto V Enhanced': translations.en.gameGTANote
+      'Grand Theft Auto V Enhanced': translations.en.gameGTANote,
+      'Atomic Heart': translations.en.gameAtomicNote,
+      'PRAGMATA': translations.en.gamePragmataNote,
+      'DOOM: The Dark Ages': translations.en.gameDoomNote,
+      'Resident Evil Village': translations.en.gameResidentVillageNote,
+      'Resident Evil 4 (Remake)': translations.en.gameResident4Note,
+      'Resident Evil Requiem': translations.en.gameResidentRequiemNote,
+      'S.T.A.L.K.E.R. 2: Heart of Chornobyl': translations.en.gameStalker2Note
     }
   };
 
@@ -362,10 +411,18 @@ const translations = {
     videoActionOpen: 'Открыть',
     favoritesTitle: 'Любимые игры',
     steamOpenButton: 'Открыть в Steam',
-    gameZenlessNote: 'Яркая городская RPG с живой боёвкой',
-    gameNTENote: 'Сюжетный хоррор с атмосферой и сообществом',
-    gameGTANote: 'Открытый мир, сюжет и бесконечный экшен',
-    moreAboutText: 'Тут текст еще не готов но будет',
+    gameZenlessNote: 'Динамичный экшен-RPG с ярким визуальным стилем в духе городского фэнтези, где сочетаются стильные сражения, качественная музыка и атмосфера постапокалиптического мегаполиса.',
+    gameNTENote: 'Амбициозный ролевой экшен с открытым миром, который сочетает в себе элементы сверхъестественного городского фэнтези, возможность управления автомобилем и глубокие механики исследования мегаполиса.',
+    gameGTANote: 'Культовый криминальный экшен в открытом мире, предлагающий масштабную историю о трёх разных преступниках в Лос-Сантосе, дополненную практически бесконечным онлайн-режимом.',
+    gameAtomicNote: 'Драйвовый шутер в сеттинге альтернативного СССР, предлагающий исследование захваченных роботами научных комплексов и динамичные сражения, которые дополняются четырьмя сюжетными дополнениями, расширяющими историю и мир игры.',
+    gamePragmataNote: 'Загадочный научно-фантастический экшен от Capcom, действие которого разворачивается в антиутопическом будущем на футуристической Луне, где акцент сделан на атмосферном повествовании и уникальных механиках взаимодействия с миром.',
+    gameDoomNote: 'Брутальный приквел серии, возвращающий Палача Рока в средневековый сеттинг, где акцент сделан на ещё более тяжёлом, «тягучем» геймплее и новых инструментах истребления демонов, дополненный недавним сюжетным расширением.',
+    gameResidentVillageNote: 'Атмосферный хоррор-экшен, в котором Итан Уинтерс оказывается в зловещей европейской деревне, пытаясь спасти свою дочь среди оборотней, вампиров и готических кошмаров.',
+    gameResident4Note: 'Современное переосмысление легендарной классики, сохранившее драйвовый экшен оригинала, но с обновлённой графикой, улучшенными механиками и более мрачной, детализированной подачей сюжета.',
+    gameResidentRequiemNote: 'Девятая часть основной серии, предлагающая глубокий хоррор-опыт с переплетением историй Леона Кеннеди и Грейс Эшкрофт, возвращающая игроков к истокам серии через призму современных технологий.',
+    gameStalker2Note: 'Масштабное продолжение культовой серии, предлагающее погружение в опасную и непредсказуемую Зону отчуждения с её аномалиями, мутантами и атмосферой выживания в открытом мире.',
+    moreAboutTitle: 'Творчество, музыка и атмосфера',
+    moreAboutText: 'Текст скоро появится!',
     backButtonText: '← Назад',
     footerText: 'Академик • Здесь должен был быть текст, но нужные слова пока не нашлись...'
   },
@@ -392,10 +449,18 @@ const translations = {
     videoActionOpen: 'Open',
     favoritesTitle: 'Favorite games',
     steamOpenButton: 'Open in Steam',
-    gameZenlessNote: 'Bright urban RPG with dynamic combat',
-    gameNTENote: 'Story-driven horror with atmosphere and community',
-    gameGTANote: 'Open world, story and endless action',
-    moreAboutText: 'This text is not ready yet but will be',
+    gameZenlessNote: 'A dynamic action RPG with a vivid visual style inspired by urban fantasy, blending stylish combat, quality music, and the atmosphere of a post-apocalyptic megacity.',
+    gameNTENote: 'An ambitious open-world action RPG that combines elements of supernatural urban fantasy, vehicle handling, and deep mechanics for exploring a megapolis.',
+    gameGTANote: 'A legendary open-world crime action game offering a sprawling story about three different criminals in Los Santos, enhanced by a nearly endless online mode.',
+    gameAtomicNote: 'A fast-paced shooter set in an alternate USSR, featuring exploration of research complexes overrun by robots and dynamic combat, expanded through four story-driven DLCs that deepen the plot and world.',
+    gamePragmataNote: 'A mysterious sci-fi action game from Capcom set in a dystopian future on a futuristic Moon, with a strong focus on atmospheric storytelling and unique world-interaction mechanics.',
+    gameDoomNote: 'A brutal prequel to the series that returns the Doom Slayer to a medieval setting, emphasizing even heavier, more deliberate gameplay and new demon-slaying tools, complemented by a recent story expansion.',
+    gameResidentVillageNote: 'An atmospheric horror action game in which Ethan Winters finds himself in a sinister European village, trying to save his daughter from werewolves, vampires, and gothic nightmares.',
+    gameResident4Note: 'A modern reinterpretation of the legendary classic, preserving the original game’s fast-paced action while adding updated visuals, refined mechanics, and a darker, more detailed presentation of the story.',
+    gameResidentRequiemNote: 'The ninth mainline entry in the series, delivering a deep horror experience with the intertwining stories of Leon S. Kennedy and Grace Ashcroft, bringing players back to the series’ roots through the lens of modern technology.',
+    gameStalker2Note: 'A massive continuation of the iconic series, offering immersion into the dangerous and unpredictable Zone with its anomalies, mutants, and the atmosphere of survival in an open world.',
+    moreAboutTitle: 'Creativity, music and atmosphere',
+    moreAboutText: 'Text is coming soon!',
     backButtonText: '← Back',
     footerText: 'Academic • There should have been text here, but the right words have not been found yet...'
   }
@@ -437,16 +502,74 @@ langButtons.forEach((button) => {
 const heroButton = document.querySelector('.hero-button');
 const backButton = document.getElementById('backButton');
 const moreAboutSection = document.getElementById('more-about-section');
+const pageShell = document.querySelector('.page-shell');
+const footerSection = document.querySelector('.footer');
+
+function hideMainPage() {
+  if (pageShell) {
+    pageShell.classList.remove('is-fading-in');
+    pageShell.classList.add('is-fading-out');
+  }
+  if (footerSection) {
+    footerSection.classList.add('is-fading-out');
+  }
+
+  window.setTimeout(() => {
+    if (pageShell) {
+      pageShell.classList.add('hidden');
+      pageShell.classList.remove('is-fading-out');
+    }
+    if (footerSection) {
+      footerSection.classList.add('hidden');
+      footerSection.classList.remove('is-fading-out');
+    }
+  }, 450);
+}
+
+function showMainPage() {
+  if (pageShell) {
+    pageShell.classList.remove('hidden');
+    pageShell.classList.add('is-fading-in');
+  }
+  if (footerSection) {
+    footerSection.classList.remove('hidden');
+    footerSection.classList.add('is-fading-in');
+  }
+
+  window.setTimeout(() => {
+    if (pageShell) {
+      pageShell.classList.remove('is-fading-in');
+    }
+    if (footerSection) {
+      footerSection.classList.remove('is-fading-in');
+    }
+  }, 450);
+}
 
 if (heroButton) {
   heroButton.addEventListener('click', () => {
-    moreAboutSection.classList.add('visible');
+    if (moreAboutSection) {
+      moreAboutSection.classList.remove('closing');
+      moreAboutSection.classList.add('visible');
+    }
+
+    hideMainPage();
   });
 }
 
 if (backButton) {
   backButton.addEventListener('click', () => {
-    moreAboutSection.classList.remove('visible');
+    if (moreAboutSection) {
+      moreAboutSection.classList.remove('visible');
+      moreAboutSection.classList.add('closing');
+    }
+
+    window.setTimeout(() => {
+      if (moreAboutSection) {
+        moreAboutSection.classList.remove('closing');
+      }
+      showMainPage();
+    }, 450);
   });
 }
 

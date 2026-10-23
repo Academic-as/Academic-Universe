@@ -17,17 +17,17 @@ const themes = {
   },
   summer: {
     label: 'Летняя',
-    bg: '#22111d',
-    bg2: '#4a2431',
-    glow1: 'rgba(255, 183, 197, 0.24)',
-    glow2: 'rgba(255, 214, 228, 0.2)',
-    panel: 'rgba(255, 255, 255, 0.08)',
-    text: '#fff7fa',
-    muted: '#c8a4b3',
-    accent: '#ffd8e4',
-    accentStrong: '#ff9eb2',
-    accentSoft: '#ffe7ef',
-    border: 'rgba(255, 216, 228, 0.28)'
+    bg: '#101110',
+    bg2: '#151615',
+    glow1: 'rgba(245, 133, 162, 0.08)',
+    glow2: 'rgba(245, 133, 162, 0.04)',
+    panel: 'rgba(255, 255, 255, 0.035)',
+    text: '#f2f1ed',
+    muted: '#a19f99',
+    accent: '#f585a2',
+    accentStrong: '#ff9fb8',
+    accentSoft: '#ffdce5',
+    border: 'rgba(255, 255, 255, 0.12)'
   },
   spring: {
     label: 'Весенняя',
@@ -191,19 +191,70 @@ scheduleThunder();
 
 const carouselElement = document.getElementById('videoCarousel');
 if (carouselElement) {
-  const speed = 0.4;
-  let position = 0;
+  const track = carouselElement.querySelector('.video-carousel-track');
+  const originalCards = Array.from(track.children);
+  let loopWidth = 0;
+  let paused = false;
+  let previousFrame = 0;
 
-  function autoScrollCarousel() {
-    position += speed;
-    if (position >= carouselElement.scrollWidth - carouselElement.clientWidth) {
-      position = 0;
+  const updateLoopWidth = () => {
+    loopWidth = track.children[originalCards.length].offsetLeft - originalCards[0].offsetLeft;
+  };
+
+  originalCards.forEach((card) => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.inert = true;
+    track.append(clone);
+  });
+  updateLoopWidth();
+  window.addEventListener('resize', updateLoopWidth);
+
+  const pauseCarousel = () => {
+    paused = true;
+  };
+
+  const resumeCarousel = () => {
+    paused = false;
+    previousFrame = 0;
+  };
+
+  carouselElement.addEventListener('pointerenter', pauseCarousel);
+  carouselElement.addEventListener('pointerleave', resumeCarousel);
+  carouselElement.addEventListener('wheel', (event) => {
+    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+      carouselElement.scrollLeft += event.deltaY;
+      event.preventDefault();
     }
-    carouselElement.scrollLeft = position;
-    requestAnimationFrame(autoScrollCarousel);
-  }
+  }, { passive: false });
+  carouselElement.addEventListener('focusin', pauseCarousel);
+  carouselElement.addEventListener('focusout', (event) => {
+    if (!carouselElement.contains(event.relatedTarget)) {
+      resumeCarousel();
+    }
+  });
 
-  autoScrollCarousel();
+  const autoScrollCarousel = (timestamp) => {
+    if (!paused && !document.hidden) {
+      if (previousFrame) {
+        const elapsed = Math.min(timestamp - previousFrame, 50);
+        carouselElement.scrollLeft += elapsed * 0.04;
+        if (carouselElement.scrollLeft >= loopWidth) {
+          carouselElement.scrollLeft -= loopWidth;
+        }
+      }
+      previousFrame = timestamp;
+    } else {
+      previousFrame = 0;
+    }
+
+    requestAnimationFrame(autoScrollCarousel);
+  };
+
+  document.addEventListener('visibilitychange', () => {
+    previousFrame = 0;
+  });
+  requestAnimationFrame(autoScrollCarousel);
 }
 
 const audioElement = document.getElementById('pageAudio');
@@ -314,6 +365,16 @@ const favoriteGames = [
     title: 'S.T.A.L.K.E.R. 2: Heart of Chornobyl',
     note: 'Масштабное продолжение культовой серии, предлагающее погружение в опасную и непредсказуемую Зону отчуждения с её аномалиями, мутантами и атмосферой выживания в открытом мире.',
     steamUrl: 'https://store.steampowered.com/app/1643320/STALKER_2_Heart_of_Chornobyl/'
+  },
+  {
+    title: 'HELLDIVERS™ 2',
+    note: 'Кооперативный шутер о защитниках Супер-Земли: объединяйтесь в отряд, выполняйте опасные задания и вместе отбивайтесь от инопланетных угроз.',
+    steamUrl: 'https://store.steampowered.com/app/553850/HELLDIVERS_2/'
+  },
+  {
+    title: 'Dead by Daylight',
+    note: 'Многопользовательский хоррор, где четверо выживших пытаются выбраться из испытания, пока убийца охотится на них.',
+    steamUrl: 'https://store.steampowered.com/app/381210/Dead_by_Daylight/'
   }
 ];
 
@@ -350,7 +411,9 @@ function renderFavorites() {
       'Resident Evil Village': translations.ru.gameResidentVillageNote,
       'Resident Evil 4 (Remake)': translations.ru.gameResident4Note,
       'Resident Evil Requiem': translations.ru.gameResidentRequiemNote,
-      'S.T.A.L.K.E.R. 2: Heart of Chornobyl': translations.ru.gameStalker2Note
+      'S.T.A.L.K.E.R. 2: Heart of Chornobyl': translations.ru.gameStalker2Note,
+      'HELLDIVERS™ 2': translations.ru.gameHelldivers2Note,
+      'Dead by Daylight': translations.ru.gameDeadByDaylightNote
     },
     en: {
       'Zenless Zone Zero': translations.en.gameZenlessNote,
@@ -362,7 +425,9 @@ function renderFavorites() {
       'Resident Evil Village': translations.en.gameResidentVillageNote,
       'Resident Evil 4 (Remake)': translations.en.gameResident4Note,
       'Resident Evil Requiem': translations.en.gameResidentRequiemNote,
-      'S.T.A.L.K.E.R. 2: Heart of Chornobyl': translations.en.gameStalker2Note
+      'S.T.A.L.K.E.R. 2: Heart of Chornobyl': translations.en.gameStalker2Note,
+      'HELLDIVERS™ 2': translations.en.gameHelldivers2Note,
+      'Dead by Daylight': translations.en.gameDeadByDaylightNote
     }
   };
 
@@ -377,8 +442,8 @@ function renderFavorites() {
                   <h3>${game.title}</h3>
                   <p class="meta">${gameNotes[currentLanguage][game.title]}</p>
                 </div>
-                ${renderSteamLink(game, locale.steamOpenButton)}
               </div>
+              ${renderSteamLink(game, locale.steamOpenButton)}
             </article>
           `
         )
@@ -392,8 +457,6 @@ const translations = {
     pageTitle: 'Академик',
     audioHint: '← не хотите немного музыки?',
     heroEyebrow: 'Коснись заветных грёз - глядя в небеса, новый путь вперёд зовёт.',
-    heroHeading: 'Привет. Я Academic — создаю музыку, миры и настроение в каждом треке и каждой игре.',
-    heroButton: 'Узнать подробнее',
     profileName: 'Academic • Академик',
     profileStatus: 'Музыка • гейминг',
     aboutTitle: 'Обо мне',
@@ -405,8 +468,7 @@ const translations = {
     linksSubtitle: 'Интересные ссылочки...',
     steamProfile: 'Мой Steam Профиль',
     myNicknameProfile: 'Творческий ник',
-    gunsLolProfile: 'Профиль и активности',
-    videosTitle: 'Все видео',
+    videosTitle: 'Последние видео',
     videosSubtitle: 'Канал Academic Studios',
     videoActionOpen: 'Открыть',
     favoritesTitle: 'Любимые игры',
@@ -421,17 +483,14 @@ const translations = {
     gameResident4Note: 'Современное переосмысление легендарной классики, сохранившее драйвовый экшен оригинала, но с обновлённой графикой, улучшенными механиками и более мрачной, детализированной подачей сюжета.',
     gameResidentRequiemNote: 'Девятая часть основной серии, предлагающая глубокий хоррор-опыт с переплетением историй Леона Кеннеди и Грейс Эшкрофт, возвращающая игроков к истокам серии через призму современных технологий.',
     gameStalker2Note: 'Масштабное продолжение культовой серии, предлагающее погружение в опасную и непредсказуемую Зону отчуждения с её аномалиями, мутантами и атмосферой выживания в открытом мире.',
-    moreAboutTitle: 'Творчество, музыка и атмосфера',
-    moreAboutText: 'Текст скоро появится!',
-    backButtonText: '← Назад',
+    gameHelldivers2Note: 'Мне нравится, как обычный вылет быстро превращается в хаос: вокруг взрывы, повсюду враги, а команда пытается не перепутать стратагемы. Особенно весело, когда всё идёт совсем не по плану.',
+    gameDeadByDaylightNote: 'Больше всего мне нравятся напряжённые погони: вроде знаешь, что делать, но когда убийца уже рядом — всё равно начинаешь паниковать. А после матчей с друзьями всегда есть что вспомнить.',
     footerText: 'Академик • Здесь должен был быть текст, но нужные слова пока не нашлись...'
   },
   en: {
     pageTitle: 'Academic',
     audioHint: '← want some music?',
     heroEyebrow: 'Touch the cherished dreams — a new path forward calls from the sky.',
-    heroHeading: 'Hello. I am Academic — I create music, worlds, and atmosphere in every track and every game.',
-    heroButton: 'Learn more',
     profileName: 'Academic • Academic',
     profileStatus: 'Music • gaming',
     aboutTitle: 'About me',
@@ -443,8 +502,7 @@ const translations = {
     linksSubtitle: 'Interesting links...',
     steamProfile: 'My Steam profile',
     myNicknameProfile: 'Creative nickname',
-    gunsLolProfile: 'Profile and activities',
-    videosTitle: 'All videos',
+    videosTitle: 'Latest videos',
     videosSubtitle: 'Academic Studios channel',
     videoActionOpen: 'Open',
     favoritesTitle: 'Favorite games',
@@ -459,9 +517,8 @@ const translations = {
     gameResident4Note: 'A modern reinterpretation of the legendary classic, preserving the original game’s fast-paced action while adding updated visuals, refined mechanics, and a darker, more detailed presentation of the story.',
     gameResidentRequiemNote: 'The ninth mainline entry in the series, delivering a deep horror experience with the intertwining stories of Leon S. Kennedy and Grace Ashcroft, bringing players back to the series’ roots through the lens of modern technology.',
     gameStalker2Note: 'A massive continuation of the iconic series, offering immersion into the dangerous and unpredictable Zone with its anomalies, mutants, and the atmosphere of survival in an open world.',
-    moreAboutTitle: 'Creativity, music and atmosphere',
-    moreAboutText: 'Text is coming soon!',
-    backButtonText: '← Back',
+    gameHelldivers2Note: 'I like how an ordinary drop quickly turns into chaos: explosions everywhere, enemies all around, and the squad trying not to mix up their stratagems. It is especially fun when nothing goes according to plan.',
+    gameDeadByDaylightNote: 'My favorite part is the tense chases: you know what you are supposed to do, but when the Killer gets close, you still start to panic. Matches with friends always leave us with stories to tell.',
     footerText: 'Academic • There should have been text here, but the right words have not been found yet...'
   }
 };
@@ -498,82 +555,6 @@ langButtons.forEach((button) => {
   });
 });
 
-// Handle "About me more" button and back button
-const heroButton = document.querySelector('.hero-button');
-const backButton = document.getElementById('backButton');
-const moreAboutSection = document.getElementById('more-about-section');
-const pageShell = document.querySelector('.page-shell');
-const footerSection = document.querySelector('.footer');
-
-function hideMainPage() {
-  if (pageShell) {
-    pageShell.classList.remove('is-fading-in');
-    pageShell.classList.add('is-fading-out');
-  }
-  if (footerSection) {
-    footerSection.classList.add('is-fading-out');
-  }
-
-  window.setTimeout(() => {
-    if (pageShell) {
-      pageShell.classList.add('hidden');
-      pageShell.classList.remove('is-fading-out');
-    }
-    if (footerSection) {
-      footerSection.classList.add('hidden');
-      footerSection.classList.remove('is-fading-out');
-    }
-  }, 450);
-}
-
-function showMainPage() {
-  if (pageShell) {
-    pageShell.classList.remove('hidden');
-    pageShell.classList.add('is-fading-in');
-  }
-  if (footerSection) {
-    footerSection.classList.remove('hidden');
-    footerSection.classList.add('is-fading-in');
-  }
-
-  window.setTimeout(() => {
-    if (pageShell) {
-      pageShell.classList.remove('is-fading-in');
-    }
-    if (footerSection) {
-      footerSection.classList.remove('is-fading-in');
-    }
-  }, 450);
-}
-
-if (heroButton) {
-  heroButton.addEventListener('click', () => {
-    if (moreAboutSection) {
-      moreAboutSection.classList.remove('closing');
-      moreAboutSection.classList.add('visible');
-    }
-
-    hideMainPage();
-  });
-}
-
-if (backButton) {
-  backButton.addEventListener('click', () => {
-    if (moreAboutSection) {
-      moreAboutSection.classList.remove('visible');
-      moreAboutSection.classList.add('closing');
-    }
-
-    window.setTimeout(() => {
-      if (moreAboutSection) {
-        moreAboutSection.classList.remove('closing');
-      }
-      showMainPage();
-    }, 450);
-  });
-}
-
 renderFavorites();
 setLanguage('ru');
 applyTheme(DEFAULT_THEME);
-
